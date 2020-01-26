@@ -1,0 +1,17 @@
+body {
+  background-color: powderblue !important;
+}
+
+h1 {
+  text-align: center;
+  padding-top: 10px;
+  font-family: Georgia, "Times New Roman", Times, serif;
+}
+
+#cat-gallery img {
+  margin: 5%;
+  width: 100%;
+  height: auto;
+}
+
+/*# sourceMappingURL=style.css.map */
