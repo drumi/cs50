@@ -1,16 +1,25 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session, redirect
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, scoped_session, session
+from sqlalchemy.orm import sessionmaker, scoped_session
 
 app = Flask(__name__)
-engine = create_engine("postgres://crtcgdjlkhktmg:90632001386e479383c4aa853f7bd6a753cceb221da959c6fdfef781f32ccf19@ec2-35-172-85-250.compute-1.amazonaws.com:5432/ddaooqjva5pmf4")
+engine = create_engine("postgres://postgres:1234@localhost:5432/pr1")
 db = scoped_session(sessionmaker(bind=engine))
+app.config['SECRET_KEY'] = 'sadfaegadfaserafsdbfasf'
 
 @app.route("/")
 def index():
+    if session.get('user') is None:
+        return redirect('/login')
     return render_template("index.html")
 
-@app.route("/test")
-def test():
-    ver = db.execute("SELECT version();").first()
-    return str(ver)
+@app.route("/login")
+def login():
+    return render_template('login.html')
+
+@app.route('/relog', methods=['POST'])
+def relog():
+    if request.form.get('register') is not None:
+        return "you registered"
+    elif request.form.get('login') is not None:
+        return "you logged in"
